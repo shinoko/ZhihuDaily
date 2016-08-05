@@ -1,0 +1,93 @@
+package com.example.administrator.zhihudaily.adapter;
+
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.example.administrator.zhihudaily.R;
+import com.example.administrator.zhihudaily.bean.News;
+
+import java.util.List;
+
+/**
+ * Created by shinoko on 2016/8/5.
+ */
+public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
+
+    private static final int ITEM_NEWS = 0;
+    private static final int ITEM_NEWS_DATE = 1;
+
+    private List<News> mNewsList;
+
+    public NewsAdapter(List<News> newsList){
+        mNewsList = newsList;
+    }
+
+
+    @Override
+    public NewsAdapter.NewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if(viewType == ITEM_NEWS){
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_news, parent, false);
+            return new NewsViewHolder(view);
+        }else{
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_news_date, parent, false);
+            return new NewsDateViewHolder(view);
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(NewsViewHolder holder, int position) {
+        final News news = mNewsList.get(position);
+
+        if(holder instanceof NewsDateViewHolder){
+            ((NewsDateViewHolder) holder).date.setText(news.getDate());
+        }
+
+        holder.newsTitle.setText(news.getTitle());
+
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position == 0) {
+            return ITEM_NEWS_DATE;
+        }
+        String currentDate = mNewsList.get(position).getDate();
+        int preIndex = position - 1;
+        return mNewsList.get(preIndex).getDate().equals(currentDate) ? ITEM_NEWS : ITEM_NEWS_DATE;
+    }
+
+    @Override
+    public int getItemCount() {
+        return mNewsList == null? 0 : mNewsList.size();
+    }
+
+
+
+    class NewsViewHolder extends RecyclerView.ViewHolder {
+
+        public TextView newsTitle;
+        public ImageView newsImage;
+
+        public NewsViewHolder(View rootView) {
+            super(rootView);
+            newsTitle = (TextView) rootView.findViewById(R.id.tv_title);
+            newsImage = (ImageView) rootView.findViewById(R.id.iv_news);
+        }
+    }
+
+    class NewsDateViewHolder extends NewsViewHolder {
+
+        public TextView date;
+
+        public NewsDateViewHolder(View rootView) {
+            super(rootView);
+            date = (TextView) rootView.findViewById(R.id.news_date);
+        }
+    }
+
+
+}
