@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.administrator.zhihudaily.R;
-import com.example.administrator.zhihudaily.bean.BannerNews;
+import com.example.administrator.zhihudaily.model.BannerNews;
 
 import java.util.ArrayList;
 import java.util.List;

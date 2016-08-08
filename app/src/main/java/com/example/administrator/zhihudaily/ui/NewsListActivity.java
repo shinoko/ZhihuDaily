@@ -15,8 +15,8 @@ import android.widget.TextView;
 import com.example.administrator.zhihudaily.R;
 import com.example.administrator.zhihudaily.adapter.NewsAdapter;
 import com.example.administrator.zhihudaily.adapter.NewsBannerAdapter;
-import com.example.administrator.zhihudaily.bean.BannerNews;
-import com.example.administrator.zhihudaily.bean.News;
+import com.example.administrator.zhihudaily.model.BannerNews;
+import com.example.administrator.zhihudaily.model.News;
 
 import java.util.ArrayList;
 import java.util.List;

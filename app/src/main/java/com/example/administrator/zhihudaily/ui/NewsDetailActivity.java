@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.example.administrator.zhihudaily.R;
-import com.example.administrator.zhihudaily.bean.News;
+import com.example.administrator.zhihudaily.model.News;
 
 public class NewsDetailActivity extends AppCompatActivity {
 

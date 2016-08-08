@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.example.administrator.zhihudaily.util.ContextUtil;
 import com.example.administrator.zhihudaily.R;
-import com.example.administrator.zhihudaily.bean.News;
+import com.example.administrator.zhihudaily.model.News;
 import com.example.administrator.zhihudaily.ui.NewsDetailActivity;
 
 import java.util.List;

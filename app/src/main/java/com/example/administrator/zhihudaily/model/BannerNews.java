@@ -1,4 +1,4 @@
-package com.example.administrator.zhihudaily.bean;
+package com.example.administrator.zhihudaily.model;
 
 import java.util.ArrayList;
 
