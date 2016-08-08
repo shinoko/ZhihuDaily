@@ -9,6 +9,7 @@
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:src="@drawable/default_banner"
         fresco:actualImageScaleType="centerCrop"
         fresco:placeholderImage="@drawable/default_banner"
         fresco:placeholderImageScaleType="centerCrop"
@@ -26,8 +27,8 @@
         android:paddingBottom="14dp"
         android:gravity="bottom"
         android:text="banner标题标题标题标题标题标题标题标题标题标题标题！"
-        android:textColor="@color/white"
-        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/news_title_textsize"
         android:textAlignment="gravity"
         />
 

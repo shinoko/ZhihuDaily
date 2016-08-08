@@ -70,6 +70,7 @@ public class BannerNews {
             BannerNews bn = new BannerNews();
             bn.setTitle(titles[i]);
             bn.setImage(images[i]);
+            list.add(bn);
         }
 
         return list;

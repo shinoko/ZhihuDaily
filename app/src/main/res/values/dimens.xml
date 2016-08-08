@@ -3,7 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="news_banner_height">120dp</dimen>
+    <dimen name="news_banner_height">260dp</dimen>
 
     <dimen name="news_list_card_height">100dp</dimen>
     <dimen name="news_list_image_width">80dp</dimen>
@@ -11,6 +11,8 @@
 
     <dimen name="news_list_date_height">40dp</dimen>
 
+    <dimen name="news_title_textsize">20sp</dimen>
+    <dimen name="news_title_source_textsize">16sp</dimen>
 
 
 </resources>

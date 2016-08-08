@@ -2,6 +2,7 @@ package com.example.administrator.zhihudaily;
 
 import android.app.Application;
 
+import com.example.administrator.zhihudaily.util.ContextUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
 
 /**
@@ -13,5 +14,6 @@ public class ZhihuDailyApplication extends Application{
     public void onCreate() {
         super.onCreate();
         Fresco.initialize(this);
+        ContextUtil.init(this);
     }
 }
