@@ -26,6 +26,9 @@ public class NewsListPresenter {
         mView = view;
     }
 
+    public void onRefresh(){
+
+    }
 
     public void getLatestNews(){
         NetworkManager.builder().getLatestNews()
@@ -45,12 +48,8 @@ public class NewsListPresenter {
 //                            mTvLoadEmpty.setVisibility(View.VISIBLE);
 
                         } else {
-
-                            Log.e("stories ",String.valueOf(newsList.getStories().size()));
-                            Log.e("top_stories ",String.valueOf(newsList.getTop_stories().size()));
-
                             mView.changeNewsList(addDate(newsList.getStories(),newsList.getDate()));
-//                            mView.changeNewsBanner(newsList.getTop_stories());
+                            mView.changeNewsBanner(newsList.getTop_stories());
 
 //                            mTvLoadEmpty.setVisibility(View.GONE);
                         }
@@ -114,6 +113,9 @@ public class NewsListPresenter {
         }
         return newList;
     }
+
+
+
 
 
 

@@ -96,6 +96,7 @@ public class NewsListActivity extends AppCompatActivity
 
         mViewPager = (ViewPager) mHeader.findViewById(R.id.banner_viewpager);
         mBannerNewsList = BannerNews.getTestList();
+//        mBannerNewsList = new ArrayList<>();
         mBannerAdapter = new NewsBannerAdapter(this, mBannerNewsList);
         mViewPager.setAdapter(mBannerAdapter);
 
@@ -169,7 +170,8 @@ public class NewsListActivity extends AppCompatActivity
 
     @Override
     public void onRefresh() {
-
+        mPresenter.getLatestNews();
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override

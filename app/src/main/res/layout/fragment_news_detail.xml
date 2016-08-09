@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_alignRight="@id/news_image"
             android:layout_alignBottom="@id/news_image"
-            android:layout_marginRight="30dp"
+            android:layout_marginRight="15dp"
             android:layout_marginBottom="6dp"
             android:text="图片来源"
             android:textSize="@dimen/news_title_source_textsize"
