@@ -50,7 +50,7 @@ public class NewsListPresenter {
                             Log.e("top_stories ",String.valueOf(newsList.getTop_stories().size()));
 
                             mView.changeNewsList(addDate(newsList.getStories(),newsList.getDate()));
-                            mView.changeNewsBanner(newsList.getTop_stories());
+//                            mView.changeNewsBanner(newsList.getTop_stories());
 
 //                            mTvLoadEmpty.setVisibility(View.GONE);
                         }

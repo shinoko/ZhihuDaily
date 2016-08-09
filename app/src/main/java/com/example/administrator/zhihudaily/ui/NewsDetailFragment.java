@@ -7,12 +7,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.administrator.zhihudaily.R;
+import com.example.administrator.zhihudaily.model.NewsDetail;
 import com.example.administrator.zhihudaily.presenter.INewsDetailPresenter;
 import com.example.administrator.zhihudaily.presenter.NewsDetailPresenter;
+import com.example.administrator.zhihudaily.util.HtmlUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 
@@ -25,8 +28,7 @@ public class NewsDetailFragment extends Fragment implements INewsDetailView{
     private TextView mImageSource;
     private SimpleDraweeView mTitleImage;
 
-    private RelativeLayout mContentSection;
-    private TextView mContent;
+    private WebView mWebView;
 
     private INewsDetailPresenter mPresenter;
 
@@ -50,8 +52,7 @@ public class NewsDetailFragment extends Fragment implements INewsDetailView{
         mImageSource = (TextView) rootView.findViewById(R.id.news_image_source);
         mTitleImage = (SimpleDraweeView) rootView.findViewById(R.id.news_image);
 
-        mContentSection = (RelativeLayout) rootView.findViewById(R.id.news_content_section);
-        mContent = (TextView) rootView.findViewById(R.id.news_content);
+        mWebView = (WebView) rootView.findViewById(R.id.webview_news);
 
         mPresenter.initView();
 
@@ -77,8 +78,14 @@ public class NewsDetailFragment extends Fragment implements INewsDetailView{
         mTitleImage.setImageURI(Uri.parse(imgURI));
     }
 
+
     @Override
-    public void setContent(String content) {
-        mContent.setText(content);
+    public void setWebView(NewsDetail newsDetail) {
+
+        StringBuffer stringBuffer = HtmlUtil.handleHtml(newsDetail.getBody(),
+                newsDetail.getCss(), newsDetail.getJs());
+        mWebView.setDrawingCacheEnabled(true);
+        mWebView.loadDataWithBaseURL("file:///android_asset/", stringBuffer.toString(), "text/html", "utf-8", null);
+
     }
 }
