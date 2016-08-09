@@ -1,10 +1,8 @@
 package com.example.administrator.zhihudaily.presenter;
 
-import android.util.Log;
-
-import com.example.administrator.zhihudaily.network.NetworkManager;
 import com.example.administrator.zhihudaily.model.News;
 import com.example.administrator.zhihudaily.model.NewsList;
+import com.example.administrator.zhihudaily.network.NetworkManager;
 import com.example.administrator.zhihudaily.ui.INewsListView;
 
 import java.util.ArrayList;
@@ -51,6 +49,8 @@ public class NewsListPresenter {
                             mView.changeNewsList(addDate(newsList.getStories(),newsList.getDate()));
                             mView.changeNewsBanner(newsList.getTop_stories());
 
+                            mView.setCurrentDate(newsList.getDate());
+
 //                            mTvLoadEmpty.setVisibility(View.GONE);
                         }
 
@@ -92,7 +92,7 @@ public class NewsListPresenter {
 //                        mAutoLoadListener.setLoading(false);
 //                        mLoadBeforeSnackbar.dismiss();
 
-                        mView.addNewsListData(newsList.getStories());
+                        mView.addNewsListData(addDate(newsList.getStories(),newsList.getDate()));
                         mView.setCurrentDate(newsList.getDate());
                     }
                 }, new Action1<Throwable>() {
