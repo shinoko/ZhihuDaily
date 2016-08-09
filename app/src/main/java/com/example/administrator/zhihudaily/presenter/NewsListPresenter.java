@@ -24,10 +24,6 @@ public class NewsListPresenter {
         mView = view;
     }
 
-    public void onRefresh(){
-
-    }
-
     public void getLatestNews(){
         NetworkManager.builder().getLatestNews()
                 .subscribeOn(Schedulers.io())
@@ -44,29 +40,23 @@ public class NewsListPresenter {
                         mView.setOnRefreshing(false);
                         if (newsList.getStories() == null) {
 //                            mTvLoadEmpty.setVisibility(View.VISIBLE);
-
                         } else {
                             mView.changeNewsList(addDate(newsList.getStories(),newsList.getDate()));
                             mView.changeNewsBanner(newsList.getTop_stories());
 
                             mView.setCurrentDate(newsList.getDate());
-
 //                            mTvLoadEmpty.setVisibility(View.GONE);
                         }
 
-//                        mTvLoadError.setVisibility(View.GONE);
-//                        mLoadLatestSnackbar.dismiss();
-
-//                        if (newsList.getStories().size() < 8) {
-//                            loadBeforeNews(curDate);
-//                        }
+                        if (newsList.getStories().size() < 8) {
+                            getBeforeNews(newsList.getDate());
+                        }
 
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
                         mView.setOnRefreshing(false);
-
 //                        mLoadLatestSnackbar.show();
 //                        mTvLoadError.setVisibility(View.VISIBLE);
 //                        mTvLoadEmpty.setVisibility(View.GONE);
@@ -79,13 +69,6 @@ public class NewsListPresenter {
         NetworkManager.builder().getBeforeNews(date)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-//                .map(new Func1<NewsList, NewsList>() {
-//                    @Override
-//                    public NewsList call(NewsList newsList) {
-//                        cacheAllDetail(newsList.getStories());
-//                        return changeReadState(newsList);
-//                    }
-//                })
                 .subscribe(new Action1<NewsList>() {
                     @Override
                     public void call(NewsList newsList) {

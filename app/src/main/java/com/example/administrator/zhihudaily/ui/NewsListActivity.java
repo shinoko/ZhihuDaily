@@ -37,7 +37,7 @@ public class NewsListActivity extends AppCompatActivity
     private RecyclerView mNewsListView;
     private NewsAdapter mNewsAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private List<News> mNewsList;
+//    private List<News> mNewsList;
 
     private boolean isLoading = false;
 
@@ -55,9 +55,6 @@ public class NewsListActivity extends AppCompatActivity
     private int preDotPosition = 0;
     private static final int SCROLL_TIME_OFFSET = 5000;
 
-
-
-
     private String currentDate;
 
     @Override
@@ -65,11 +62,18 @@ public class NewsListActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_list);
 
+        mPresenter = new NewsListPresenter(this);
+
         initToolbar();
         initList();
         initBanner();
 
-        initData();
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                onRefresh();
+            }
+        });
     }
 
     private void initToolbar(){
@@ -89,8 +93,10 @@ public class NewsListActivity extends AppCompatActivity
         mLayoutManager = new LinearLayoutManager(this);
         mNewsListView.setLayoutManager(mLayoutManager);
 
-        mNewsList = News.getTestList();
-        mNewsAdapter = new NewsAdapter(mNewsList);
+
+        //**************************************************8
+//        mNewsList = News.getTestList();
+        mNewsAdapter = new NewsAdapter();
         mNewsListView.setAdapter(mNewsAdapter);
 
     }
@@ -100,21 +106,27 @@ public class NewsListActivity extends AppCompatActivity
         mNewsAdapter.setHeaderView(mHeader);
 
         mViewPager = (ViewPager) mHeader.findViewById(R.id.banner_viewpager);
-        mBannerNewsList = BannerNews.getTestList();
-//        mBannerNewsList = new ArrayList<>();
-        mBannerAdapter = new NewsBannerAdapter(this, mBannerNewsList);
+
+        //**************************************************
+//        mBannerNewsList = BannerNews.getTestList();
+        mBannerAdapter = new NewsBannerAdapter(this);
         mViewPager.setAdapter(mBannerAdapter);
 
-        setBannerIndex();
-
-        mViewPager.setCurrentItem(0);
-    }
-
-    private void setBannerIndex(){
         mLLDotGroupParent = (LinearLayout) mHeader.findViewById(R.id.ll_dot_group_parent);
         mLLDotGroup = (LinearLayout) mHeader.findViewById(R.id.ll_dot_group);
 
+//        setBannerIndex();
+
+//        mViewPager.setCurrentItem(0);
+    }
+
+    private void setBannerIndex(){
+        if(mLLDotGroup.getChildCount() > 0){
+            mLLDotGroup.removeAllViews();
+        }
+
         int size = mBannerNewsList.size();
+        Log.e("banner size:",size+"");
         if(size > 1) {
             for (int i = 0; i < size; i++) {
                 View dot = null;
@@ -132,9 +144,9 @@ public class NewsListActivity extends AppCompatActivity
                 // 向线性布局中添加"点"
                 mLLDotGroup.addView(dot);
             }
-            mLLDotGroup.getChildAt(0).setEnabled(true);
-
+            mLLDotGroup.getChildAt(mBannerAdapter.getCurrentPage()).setEnabled(true);
         }
+
 
         //set listener
         mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -163,19 +175,15 @@ public class NewsListActivity extends AppCompatActivity
             }
         });
 
-        mLLDotGroup.getChildAt(0).setEnabled(true);
-    }
-
-
-
-    private void initData(){
-        mPresenter = new NewsListPresenter(this);
-        mPresenter.getLatestNews();
+        if(mLLDotGroup.getChildCount()>0){
+            mLLDotGroup.getChildAt(mBannerAdapter.getCurrentPage()).setEnabled(true);
+        }
     }
 
     @Override
     public void onRefresh() {
         mPresenter.getLatestNews();
+        setBannerIndex();
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
@@ -191,8 +199,9 @@ public class NewsListActivity extends AppCompatActivity
 
     @Override
     public void changeNewsBanner(List<BannerNews> bannerNewsList) {
+        mBannerNewsList = bannerNewsList;
         mBannerAdapter.changeData(bannerNewsList);
-//        setBannerIndex();
+        setBannerIndex();
     }
 
     @Override
@@ -210,16 +219,13 @@ public class NewsListActivity extends AppCompatActivity
         mNewsAdapter.addData(listToAdd);
     }
 
-
     class NewsListLoadingListener extends RecyclerView.OnScrollListener{
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
-            Log.e("test", "onScrolled");
 
             int lastVisibleItemPosition = mLayoutManager.findLastVisibleItemPosition();
             if (lastVisibleItemPosition + 1 == mNewsAdapter.getItemCount()) {
-                Log.e("test", "loading executed");
 
                 boolean isRefreshing = mSwipeRefreshLayout.isRefreshing();
                 if (isRefreshing) {
@@ -232,8 +238,6 @@ public class NewsListActivity extends AppCompatActivity
                         @Override
                         public void run() {
                             mPresenter.getBeforeNews(currentDate);
-
-                            Log.e("test", "load more completed");
                             isLoading = false;
                         }
                     }, 1000);

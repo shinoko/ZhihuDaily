@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.example.administrator.zhihudaily.R;
 import com.example.administrator.zhihudaily.model.BannerNews;
+import com.example.administrator.zhihudaily.ui.NewsDetailActivity;
+import com.example.administrator.zhihudaily.util.ContextUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
@@ -22,15 +24,25 @@ public class NewsBannerAdapter extends PagerAdapter{
 
     private Context mContext;
     private List<BannerNews> mBannerNewsList;
-
     private List<View> mViewList;
 
-    public NewsBannerAdapter(Context context, List<BannerNews> list){
-        mContext = context;
-        mBannerNewsList = list;
+    private int currentPage = 0;
 
+//    public NewsBannerAdapter(Context context, List<BannerNews> list){
+//        mContext = context;
+//        mBannerNewsList = list;
+//
+//        getViewList();
+//        notifyDataSetChanged();
+//    }
+
+    public NewsBannerAdapter(Context context){
+        mContext = context;
+    }
+
+    public void setDataList(List<BannerNews> list){
+        mBannerNewsList = list;
         getViewList();
-        notifyDataSetChanged();
     }
 
     private void getViewList(){
@@ -45,23 +57,17 @@ public class NewsBannerAdapter extends PagerAdapter{
             SimpleDraweeView imageView = (SimpleDraweeView) view.findViewById(R.id.banner_image);
             imageView.setImageURI(Uri.parse(mBannerNewsList.get(i).getImage()));
 
+            view.setOnClickListener(getListener(mBannerNewsList.get(i)));
+
             mViewList.add(view);
         }
 
     }
 
-//    public NewsBannerAdapter(Context context, List<TextView> list){
-//        mContext = context;
-//        viewList = list;
-//
-//        Log.d("tag",String.valueOf(list.size()));
-//    }
-
-
     @Override
     public int getCount() {
-//        return mBannerNewsList == null? 0 : mBannerNewsList.size();
-        return mViewList.size();
+        return mViewList == null? 0 : mViewList.size();
+//        return mViewList.size();
     }
 
     @Override
@@ -73,18 +79,6 @@ public class NewsBannerAdapter extends PagerAdapter{
     public Object instantiateItem(ViewGroup container, int position) {
 
         Log.d("now position",String.valueOf(position));
-
-
-//        final BannerNews bannerNews = mBannerNewsList.get(position);
-//
-//        View view = LayoutInflater.from(mContext).inflate(R.layout.item_banner_news, container, false);
-//
-//        SimpleDraweeView image = (SimpleDraweeView) view.findViewById(R.id.banner_image);
-////        image.setImageURI(Uri.parse(bannerNews.getImage()));
-//
-//
-//        TextView bannerTitle = (TextView) view.findViewById(R.id.banner_title);
-//        bannerTitle.setText(bannerNews.getTitle());
 
         container.addView(mViewList.get(position));
 
@@ -101,11 +95,31 @@ public class NewsBannerAdapter extends PagerAdapter{
         return POSITION_NONE;
     }
 
+    @Override
+    public void setPrimaryItem(ViewGroup container, int position, Object object) {
+        currentPage = position;
+        Log.e("current ",position+"");
+    }
+
+    public int getCurrentPage(){
+        return currentPage;
+    }
+
 
     public void changeData(List<BannerNews> newsList) {
         mBannerNewsList = newsList;
         getViewList();
         notifyDataSetChanged();
+    }
+
+    private View.OnClickListener getListener(final BannerNews news){
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NewsDetailActivity.startFromBanner(ContextUtil.getContext(), news);
+            }
+        };
+
     }
 
 

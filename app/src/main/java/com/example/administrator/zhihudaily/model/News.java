@@ -91,7 +91,7 @@ public class News {
             for (int j = 0; j < 5; j++) {
                 News n = new News();
                 int day = 5-i;
-                n.setDate("8月"+day+"日");
+                n.setDate("2016080"+day+"日");
                 n.setTitle("标题标题标题标题标题标题标题标题标题标题标题标题"+i+"-"+j);
                 list.add(n);
             }

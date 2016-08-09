@@ -13,6 +13,7 @@ import com.example.administrator.zhihudaily.R;
 import com.example.administrator.zhihudaily.model.News;
 import com.example.administrator.zhihudaily.ui.NewsDetailActivity;
 import com.example.administrator.zhihudaily.util.ContextUtil;
+import com.example.administrator.zhihudaily.util.DateUtil;
 
 import java.util.List;
 
@@ -28,8 +29,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     private List<News> mNewsList;
     private View mHeaderView;
 
+    public NewsAdapter(){}
+
     public NewsAdapter(List<News> newsList){
         mNewsList = newsList;
+    }
+
+    public void setDataList(List<News> list){
+        mNewsList = list;
     }
 
     public void setHeaderView(View headerView){
@@ -39,7 +46,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     public View getHeaderView(){
         return mHeaderView;
     }
-
 
     @Override
     public NewsAdapter.NewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -64,7 +70,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             final News news = mNewsList.get(position-1);
 
             if(holder instanceof NewsDateViewHolder){
-                ((NewsDateViewHolder) holder).date.setText(news.getDate());
+                ((NewsDateViewHolder) holder).date.setText(DateUtil.getFormateDate(news.getDate()));
             }
 
             holder.newsTitle.setText(news.getTitle());
@@ -73,7 +79,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
                 holder.newsImage.setImageURI(Uri.parse(news.getImages().get(0)));
             }
 
-            holder.cardView.setOnClickListener(getListener(holder,news));
+            holder.cardView.setOnClickListener(getListener(news));
 
         }
     }
@@ -96,14 +102,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     }
 
 
-    private View.OnClickListener getListener(NewsViewHolder holder, final News news){
+    private View.OnClickListener getListener(final News news){
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NewsDetailActivity.start(ContextUtil.getContext(), news);
             }
         };
-
     }
 
 
@@ -121,13 +126,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         }
     }
 
-
-    class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class NewsViewHolder extends RecyclerView.ViewHolder {
 
         public CardView cardView;
         public TextView newsTitle;
         public ImageView newsImage;
-
 
         public NewsViewHolder(View rootView) {
             super(rootView);
@@ -136,18 +139,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
                 return;
             }
 
-            rootView.setOnClickListener(this);
-
             cardView = (CardView) rootView.findViewById(R.id.cv_item);
             newsTitle = (TextView) rootView.findViewById(R.id.tv_title);
             newsImage = (ImageView) rootView.findViewById(R.id.iv_news);
         }
 
-        @Override
-        public void onClick(View view) {
-//            Intent intent = new Intent(ContextUtil.getContext(), NewsDetailActivity.class);
-//            ContextUtil.getContext().startActivity(intent);
-        }
     }
 
     class NewsDateViewHolder extends NewsViewHolder{

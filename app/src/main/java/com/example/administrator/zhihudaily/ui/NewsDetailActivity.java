@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.administrator.zhihudaily.R;
+import com.example.administrator.zhihudaily.model.BannerNews;
 import com.example.administrator.zhihudaily.model.News;
 
 public class NewsDetailActivity extends AppCompatActivity {
@@ -35,6 +36,13 @@ public class NewsDetailActivity extends AppCompatActivity {
     public static void start(Context context, News news) {
         Intent intent = new Intent(context, NewsDetailActivity.class);
         intent.putExtra(KEY_NEWS, news.getId());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    public static void startFromBanner(Context context, BannerNews bannerNews) {
+        Intent intent = new Intent(context, NewsDetailActivity.class);
+        intent.putExtra(KEY_NEWS, bannerNews.getId());
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
