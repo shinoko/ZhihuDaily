@@ -89,4 +89,17 @@ public class NewsBannerAdapter extends PagerAdapter{
         container.removeView(mViewList.get(position));
     }
 
+//    @Override
+//    public int getItemPosition(Object object) {
+//        return POSITION_NONE;
+//    }
+
+
+    public void changeData(List<BannerNews> newsList) {
+        mBannerNewsList = newsList;
+        getViewList();
+        notifyDataSetChanged();
+    }
+
+
 }

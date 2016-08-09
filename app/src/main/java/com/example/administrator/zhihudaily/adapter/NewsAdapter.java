@@ -1,17 +1,19 @@
 package com.example.administrator.zhihudaily.adapter;
 
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.administrator.zhihudaily.util.ContextUtil;
 import com.example.administrator.zhihudaily.R;
 import com.example.administrator.zhihudaily.model.News;
 import com.example.administrator.zhihudaily.ui.NewsDetailActivity;
+import com.example.administrator.zhihudaily.util.ContextUtil;
 
 import java.util.List;
 
@@ -68,6 +70,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
             holder.newsTitle.setText(news.getTitle());
 
+            if(news.getImages() != null){
+                holder.newsImage.setImageURI(Uri.parse(news.getImages().get(0)));
+            }
+
             holder.cardView.setOnClickListener(getListener(holder,news));
 
         }
@@ -81,7 +87,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             return ITEM_NEWS_DATE;
         }
         String currentDate = mNewsList.get(position-1).getDate();
+
+        Log.e("curr ",currentDate);
+
         int preIndex = position - 2;
+
+        Log.e("pre  ",mNewsList.get(preIndex).getDate());
+
         return mNewsList.get(preIndex).getDate().equals(currentDate) ? ITEM_NEWS : ITEM_NEWS_DATE;
     }
 
@@ -100,6 +112,21 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             }
         };
 
+    }
+
+
+    public void changeData(List<News> newsList) {
+        mNewsList = newsList;
+        notifyDataSetChanged();
+    }
+
+    public void addData(List<News> newsList) {
+        if (mNewsList == null) {
+            changeData(newsList);
+        } else {
+            mNewsList.addAll(newsList);
+            notifyDataSetChanged();
+        }
     }
 
 

@@ -10,43 +10,51 @@ import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.example.administrator.zhihudaily.R;
 import com.example.administrator.zhihudaily.adapter.NewsAdapter;
 import com.example.administrator.zhihudaily.adapter.NewsBannerAdapter;
 import com.example.administrator.zhihudaily.model.BannerNews;
 import com.example.administrator.zhihudaily.model.News;
+import com.example.administrator.zhihudaily.presenter.NewsListPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsListActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class NewsListActivity extends AppCompatActivity
+        implements SwipeRefreshLayout.OnRefreshListener, INewsListView {
+
+    private NewsListPresenter mPresenter;
+
 
     private Toolbar mToolbar;
 
+
+    //********** News List相关 **********
+    private LinearLayoutManager mLayoutManager;
     private RecyclerView mNewsListView;
     private NewsAdapter mNewsAdapter;
-    private LinearLayoutManager mLayoutManager;
-
     private SwipeRefreshLayout mSwipeRefreshLayout;
-
     private List<News> mNewsList;
 
 
+    //********** Banner相关 **********
     private View mHeader;
     private ViewPager mViewPager;
     private NewsBannerAdapter mBannerAdapter;
     private List<BannerNews> mBannerNewsList = new ArrayList<>();
     private LinearLayout mLLDotGroupParent;
     private LinearLayout mLLDotGroup;
-
     //banner当前位置
     private int mBannerPosition = 0;
     //小圆点位置
     private int preDotPosition = 0;
-
     private static final int SCROLL_TIME_OFFSET = 5000;
+
+
+
+
+    private String currentDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +65,7 @@ public class NewsListActivity extends AppCompatActivity implements SwipeRefreshL
         initList();
         initBanner();
 
+        initData();
     }
 
     private void initToolbar(){
@@ -78,6 +87,7 @@ public class NewsListActivity extends AppCompatActivity implements SwipeRefreshL
         mNewsList = News.getTestList();
         mNewsAdapter = new NewsAdapter(mNewsList);
         mNewsListView.setAdapter(mNewsAdapter);
+
     }
 
     private void initBanner(){
@@ -145,17 +155,9 @@ public class NewsListActivity extends AppCompatActivity implements SwipeRefreshL
         mViewPager.setCurrentItem(0);
     }
 
-
-
-    private List<TextView> getTestTextList(){
-        ArrayList<TextView> list = new ArrayList<>();
-
-        for (int i = 0; i < 5; i++) {
-            TextView v = new TextView(this);
-            v.setText("标题标题标题标题标题标题标题标题标题标题"+i);
-            list.add(v);
-        }
-        return list;
+    private void initData(){
+        mPresenter = new NewsListPresenter(this);
+        mPresenter.getLatestNews();
     }
 
     @Override
@@ -163,5 +165,33 @@ public class NewsListActivity extends AppCompatActivity implements SwipeRefreshL
 
     }
 
+    @Override
+    public void setOnRefreshing(boolean onRefreshing) {
 
+    }
+
+    @Override
+    public void changeNewsList(List<News> newsList) {
+        mNewsAdapter.changeData(newsList);
+    }
+
+    @Override
+    public void changeNewsBanner(List<BannerNews> bannerNewsList) {
+        mBannerAdapter.changeData(bannerNewsList);
+    }
+
+    @Override
+    public String getCurrentDate() {
+        return currentDate;
+    }
+
+    @Override
+    public void setCurrentDate(String date) {
+        currentDate = date;
+    }
+
+    @Override
+    public void addNewsListData(List<News> listToAdd) {
+        mNewsAdapter.addData(listToAdd);
+    }
 }
