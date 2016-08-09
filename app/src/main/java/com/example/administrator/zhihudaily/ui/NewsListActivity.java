@@ -99,6 +99,12 @@ public class NewsListActivity extends AppCompatActivity
         mBannerAdapter = new NewsBannerAdapter(this, mBannerNewsList);
         mViewPager.setAdapter(mBannerAdapter);
 
+        setBannerIndex();
+
+        mViewPager.setCurrentItem(0);
+    }
+
+    private void setBannerIndex(){
         mLLDotGroupParent = (LinearLayout) mHeader.findViewById(R.id.ll_dot_group_parent);
         mLLDotGroup = (LinearLayout) mHeader.findViewById(R.id.ll_dot_group);
 
@@ -152,8 +158,9 @@ public class NewsListActivity extends AppCompatActivity
         });
 
         mLLDotGroup.getChildAt(0).setEnabled(true);
-        mViewPager.setCurrentItem(0);
     }
+
+
 
     private void initData(){
         mPresenter = new NewsListPresenter(this);
@@ -178,6 +185,7 @@ public class NewsListActivity extends AppCompatActivity
     @Override
     public void changeNewsBanner(List<BannerNews> bannerNewsList) {
         mBannerAdapter.changeData(bannerNewsList);
+//        setBannerIndex();
     }
 
     @Override

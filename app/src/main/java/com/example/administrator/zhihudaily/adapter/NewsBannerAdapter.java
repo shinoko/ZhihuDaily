@@ -1,6 +1,7 @@
 package com.example.administrator.zhihudaily.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.administrator.zhihudaily.R;
 import com.example.administrator.zhihudaily.model.BannerNews;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,7 @@ public class NewsBannerAdapter extends PagerAdapter{
         mBannerNewsList = list;
 
         getViewList();
+        notifyDataSetChanged();
     }
 
     private void getViewList(){
@@ -38,6 +41,10 @@ public class NewsBannerAdapter extends PagerAdapter{
 
             TextView tv = (TextView) view.findViewById(R.id.banner_title);
             tv.setText(mBannerNewsList.get(i).getTitle());
+
+            SimpleDraweeView imageView = (SimpleDraweeView) view.findViewById(R.id.banner_image);
+            imageView.setImageURI(Uri.parse(mBannerNewsList.get(i).getImage()));
+
             mViewList.add(view);
         }
 
@@ -89,10 +96,10 @@ public class NewsBannerAdapter extends PagerAdapter{
         container.removeView(mViewList.get(position));
     }
 
-//    @Override
-//    public int getItemPosition(Object object) {
-//        return POSITION_NONE;
-//    }
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
 
 
     public void changeData(List<BannerNews> newsList) {
