@@ -65,12 +65,17 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     @Override
     public void onBindViewHolder(NewsViewHolder holder, int position) {
         if(getItemViewType(position) == ITEM_HEADER){
+            holder.dateInfo = "首页";
+
             return;
         }else{
             final News news = mNewsList.get(position-1);
 
+            String dateInfo = DateUtil.getFormateDate(news.getDate());
+            holder.dateInfo = dateInfo;
+
             if(holder instanceof NewsDateViewHolder){
-                ((NewsDateViewHolder) holder).date.setText(DateUtil.getFormateDate(news.getDate()));
+                ((NewsDateViewHolder) holder).date.setText(dateInfo);
             }
 
             holder.newsTitle.setText(news.getTitle());
@@ -80,7 +85,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             }
 
             holder.cardView.setOnClickListener(getListener(news));
-
         }
     }
 
@@ -132,6 +136,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         public TextView newsTitle;
         public ImageView newsImage;
 
+        public String dateInfo;
+
         public NewsViewHolder(View rootView) {
             super(rootView);
 
@@ -139,6 +145,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
                 return;
             }
 
+            dateInfo = "";
             cardView = (CardView) rootView.findViewById(R.id.cv_item);
             newsTitle = (TextView) rootView.findViewById(R.id.tv_title);
             newsImage = (ImageView) rootView.findViewById(R.id.iv_news);

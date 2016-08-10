@@ -10,7 +10,7 @@ import java.util.Date;
  */
 public class DateUtil {
 
-    public static final String TODAY_STR = "今日要闻";
+    public static final String TODAY_STR = "今日热闻";
 
     public static String getFormateDate(String date){
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");

@@ -234,8 +234,8 @@ public class NewsListActivity extends AppCompatActivity
             View view = recyclerView.findChildViewUnder(recyclerView.getMeasuredWidth() / 2, 5);
             if (view != null) {
                 RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(view);
-                if(viewHolder instanceof NewsAdapter.NewsDateViewHolder){
-                    String title = (String) ((NewsAdapter.NewsDateViewHolder) viewHolder).date.getText();
+                if(viewHolder instanceof NewsAdapter.NewsViewHolder){
+                    String title = ((NewsAdapter.NewsViewHolder) viewHolder).dateInfo;
                     setTitleText(title);
                 }
             }
