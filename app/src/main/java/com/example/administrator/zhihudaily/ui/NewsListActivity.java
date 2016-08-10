@@ -78,6 +78,8 @@ public class NewsListActivity extends AppCompatActivity
 
     private void initToolbar(){
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle(R.string.home_page);
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(mToolbar);
     }
 
@@ -180,6 +182,10 @@ public class NewsListActivity extends AppCompatActivity
         }
     }
 
+    private void setTitleText(String titleText){
+        mToolbar.setTitle(titleText);
+    }
+
     @Override
     public void onRefresh() {
         mPresenter.getLatestNews();
@@ -224,6 +230,17 @@ public class NewsListActivity extends AppCompatActivity
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
 
+            //改变toolbar标题内容
+            View view = recyclerView.findChildViewUnder(recyclerView.getMeasuredWidth() / 2, 5);
+            if (view != null) {
+                RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(view);
+                if(viewHolder instanceof NewsAdapter.NewsDateViewHolder){
+                    String title = (String) ((NewsAdapter.NewsDateViewHolder) viewHolder).date.getText();
+                    setTitleText(title);
+                }
+            }
+
+            //滑动到底部，加载更多数据
             int lastVisibleItemPosition = mLayoutManager.findLastVisibleItemPosition();
             if (lastVisibleItemPosition + 1 == mNewsAdapter.getItemCount()) {
 

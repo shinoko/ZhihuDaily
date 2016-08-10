@@ -1,8 +1,11 @@
 <resources>
-    <string name="app_name">ZhihuDaily</string>
+    <string name="app_name">ZhihuDaily!</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="news_list_date_today">今日热闻</string>
+
+    <string name="home_page">首页</string>
+
 </resources>

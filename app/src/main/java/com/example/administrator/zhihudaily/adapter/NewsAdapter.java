@@ -126,7 +126,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         }
     }
 
-    class NewsViewHolder extends RecyclerView.ViewHolder {
+    public class NewsViewHolder extends RecyclerView.ViewHolder {
 
         public CardView cardView;
         public TextView newsTitle;
@@ -146,7 +146,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     }
 
-    class NewsDateViewHolder extends NewsViewHolder{
+    public class NewsDateViewHolder extends NewsViewHolder{
 
         public TextView date;
 

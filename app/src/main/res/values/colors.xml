@@ -6,4 +6,11 @@
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="light_gray">#DDDDDD</color>
+
+    <color name="title_blue">#6699FF</color>
+
+    <color name="cyan">#00BCD4</color>
+    <color name="cyan_light">#E0F7FA</color>
+    <color name="cyan_dark">#00ACC1</color>
 </resources>
