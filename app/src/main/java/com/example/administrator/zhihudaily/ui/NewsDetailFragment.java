@@ -3,6 +3,7 @@ package com.example.administrator.zhihudaily.ui;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,20 +24,23 @@ public class NewsDetailFragment extends Fragment implements INewsDetailView{
 
     private int newsID = 3892357;
 
+    private NewsDetailActivity mActivity;
+
     private RelativeLayout mTitleSection;
     private TextView mTitle;
     private TextView mImageSource;
     private SimpleDraweeView mTitleImage;
 
+    private DetailScrollView mScrollView;
     private WebView mWebView;
 
     private INewsDetailPresenter mPresenter;
 
 
 
-    public NewsDetailFragment(int id) {
+    public NewsDetailFragment(NewsDetailActivity activity, int id) {
         newsID = id;
-
+        mActivity = activity;
         mPresenter = new NewsDetailPresenter(this);
     }
 
@@ -53,6 +57,10 @@ public class NewsDetailFragment extends Fragment implements INewsDetailView{
         mTitleImage = (SimpleDraweeView) rootView.findViewById(R.id.news_image);
 
         mWebView = (WebView) rootView.findViewById(R.id.webview_news);
+        mScrollView = (DetailScrollView) rootView.findViewById(R.id.scrollView);
+        mScrollView.setToolbar(mActivity.getToolbar());
+        mScrollView.setHeadView(mTitleSection);
+        mScrollView.setAppBarLayout((AppBarLayout) rootView.findViewById(R.id.app_bar));
 
         mPresenter.initView();
 

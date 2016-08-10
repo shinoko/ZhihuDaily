@@ -32,7 +32,7 @@ public class NewsDetailActivity extends AppCompatActivity {
         newsID = intent.getIntExtra(KEY_NEWS,8661316);
 
         mFragmentTransaction = getSupportFragmentManager().beginTransaction();
-        mFragment = new NewsDetailFragment(newsID);
+        mFragment = new NewsDetailFragment(this,newsID);
         mFragmentTransaction.add(R.id.news_detail, mFragment);
         mFragmentTransaction.commit();
 
@@ -65,5 +65,9 @@ public class NewsDetailActivity extends AppCompatActivity {
     public void onNewsChange(){
 
 
+    }
+
+    public Toolbar getToolbar(){
+        return mToolbar;
     }
 }
