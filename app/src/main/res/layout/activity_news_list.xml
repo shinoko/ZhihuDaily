@@ -23,18 +23,25 @@
             android:titleTextColor="@color/white"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"/>
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh_layout"
+        <FrameLayout
+            android:id="@+id/news_content_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/news_list_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+        </FrameLayout>
+
+        <!--<android.support.v4.widget.SwipeRefreshLayout-->
+            <!--android:id="@+id/swipe_refresh_layout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
+
+            <!--<android.support.v7.widget.RecyclerView-->
+                <!--android:id="@+id/news_list_view"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent" />-->
 
 
-        </android.support.v4.widget.SwipeRefreshLayout>
+        <!--</android.support.v4.widget.SwipeRefreshLayout>-->
 
 
     </LinearLayout>

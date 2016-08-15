@@ -3,6 +3,8 @@ package com.example.administrator.zhihudaily.ui;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,7 +15,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Menu;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -74,16 +75,25 @@ public class NewsListActivity extends AppCompatActivity
         mPresenter = new NewsListPresenter(this);
 
         initToolbar();
-        initList();
-        initBanner();
+//        initList();
+//        initBanner();
         initDrawer();
 
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                onRefresh();
-            }
-        });
+//        new Handler().post(new Runnable() {
+//            @Override
+//            public void run() {
+//                onRefresh();
+//            }
+//        });
+
+
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        Fragment homeFragment = NewsListFragment.newInstance();
+        fragmentTransaction.add(R.id.news_content_layout,homeFragment);
+        fragmentTransaction.commit();
+
+
     }
 
     private void initToolbar(){
@@ -217,7 +227,7 @@ public class NewsListActivity extends AppCompatActivity
 
     @Override
     public void setOnRefreshing(boolean onRefreshing) {
-
+        mSwipeRefreshLayout.setRefreshing(onRefreshing);
     }
 
     @Override
@@ -249,7 +259,7 @@ public class NewsListActivity extends AppCompatActivity
 
     @Override
     public void setDrawerData(List<ThemeItem> themeItemList) {
-        Menu menu = mNavigationView.getMenu();
+        mNavigationView.getMenu().add("首页");
         for(ThemeItem item:themeItemList){
             mNavigationView.getMenu().add(item.getName());
             Log.d("menu","add "+item.getName());
