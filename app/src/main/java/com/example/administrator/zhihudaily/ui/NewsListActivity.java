@@ -29,8 +29,7 @@ import com.example.administrator.zhihudaily.presenter.NewsListPresenter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsListActivity extends AppCompatActivity
-        implements SwipeRefreshLayout.OnRefreshListener, INewsListView {
+public class NewsListActivity extends AppCompatActivity implements INewsListView {
 
     private NewsListPresenter mPresenter;
 
@@ -104,9 +103,9 @@ public class NewsListActivity extends AppCompatActivity
     }
 
     private void initList(){
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
-        mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+//        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+//        mSwipeRefreshLayout.setOnRefreshListener(this);
+//        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
         mNewsListView = (RecyclerView) findViewById(R.id.news_list_view);
         mNewsListView.setHasFixedSize(true);
@@ -214,20 +213,12 @@ public class NewsListActivity extends AppCompatActivity
         }
     }
 
-    private void setTitleText(String titleText){
+    public void setTitleText(String titleText){
         mToolbar.setTitle(titleText);
     }
 
     @Override
-    public void onRefresh() {
-        mPresenter.getLatestNews();
-        setBannerIndex();
-        mSwipeRefreshLayout.setRefreshing(false);
-    }
-
-    @Override
     public void setOnRefreshing(boolean onRefreshing) {
-        mSwipeRefreshLayout.setRefreshing(onRefreshing);
     }
 
     @Override

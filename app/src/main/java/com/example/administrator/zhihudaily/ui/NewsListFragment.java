@@ -225,12 +225,12 @@ public class NewsListFragment extends Fragment
 
     @Override
     public String getCurrentDate() {
-        return null;
+        return currentDate;
     }
 
     @Override
     public void setCurrentDate(String date) {
-
+        currentDate = date;
     }
 
     @Override
@@ -240,7 +240,6 @@ public class NewsListFragment extends Fragment
 
     @Override
     public void setDrawerData(List<ThemeItem> themeItemList) {
-
     }
 
     @Override
@@ -262,7 +261,7 @@ public class NewsListFragment extends Fragment
                 RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(view);
                 if(viewHolder instanceof NewsAdapter.NewsViewHolder){
                     String title = ((NewsAdapter.NewsViewHolder) viewHolder).dateInfo;
-//                    setTitleText(title);
+                    mActivity.setTitleText(title);
                 }
             }
 
