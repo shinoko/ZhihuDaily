@@ -8,4 +8,13 @@
 
     <string name="home_page">首页</string>
 
+    <string name="multipic">多图</string>
+
+    <string name="navigation_example">栏目标题</string>
+
+    <string name="drawer_header_title">:)</string>
+
+    <string name="drawer_open">open drawer</string>
+    <string name="drawer_close">close drawer</string>
+
 </resources>

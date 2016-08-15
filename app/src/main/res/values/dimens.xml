@@ -13,6 +13,7 @@
 
     <dimen name="news_title_textsize">22sp</dimen>
     <dimen name="news_title_source_textsize">11sp</dimen>
+    <dimen name="multipic_textsize">11sp</dimen>
 
     <dimen name="actionbar_height">?attr/actionBarSize</dimen>
 

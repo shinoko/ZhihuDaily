@@ -1,7 +1,10 @@
 package com.example.administrator.zhihudaily.presenter;
 
+import android.util.Log;
+
 import com.example.administrator.zhihudaily.model.News;
 import com.example.administrator.zhihudaily.model.NewsList;
+import com.example.administrator.zhihudaily.model.ThemeList;
 import com.example.administrator.zhihudaily.network.NetworkManager;
 import com.example.administrator.zhihudaily.ui.INewsListView;
 
@@ -83,6 +86,25 @@ public class NewsListPresenter {
                     public void call(Throwable throwable) {
 //                        mAutoLoadListener.setLoading(false);
 //                        mLoadBeforeSnackbar.show();
+                    }
+                });
+
+    }
+
+    public void getThemes(){
+        NetworkManager.builder().getThemes()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<ThemeList>() {
+                    @Override
+                    public void call(ThemeList themeList) {
+                        mView.setDrawerData(themeList.getOthers());
+                        Log.d("menu","menu get items");
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+
                     }
                 });
 

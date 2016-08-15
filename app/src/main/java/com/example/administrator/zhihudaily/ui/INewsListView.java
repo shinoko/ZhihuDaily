@@ -2,6 +2,7 @@ package com.example.administrator.zhihudaily.ui;
 
 import com.example.administrator.zhihudaily.model.BannerNews;
 import com.example.administrator.zhihudaily.model.News;
+import com.example.administrator.zhihudaily.model.ThemeItem;
 
 import java.util.List;
 
@@ -21,6 +22,8 @@ public interface INewsListView {
     void setCurrentDate(String date);
 
     void addNewsListData(List<News> listToAdd);
+
+    void setDrawerData(List<ThemeItem> themeItemList);
 
 
 

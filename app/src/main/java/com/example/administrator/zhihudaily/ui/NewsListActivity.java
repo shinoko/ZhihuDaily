@@ -2,14 +2,18 @@ package com.example.administrator.zhihudaily.ui;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Menu;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -18,6 +22,7 @@ import com.example.administrator.zhihudaily.adapter.NewsAdapter;
 import com.example.administrator.zhihudaily.adapter.NewsBannerAdapter;
 import com.example.administrator.zhihudaily.model.BannerNews;
 import com.example.administrator.zhihudaily.model.News;
+import com.example.administrator.zhihudaily.model.ThemeItem;
 import com.example.administrator.zhihudaily.presenter.NewsListPresenter;
 
 import java.util.ArrayList;
@@ -30,6 +35,10 @@ public class NewsListActivity extends AppCompatActivity
 
 
     private Toolbar mToolbar;
+
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private NavigationView mNavigationView;
 
 
     //********** News List相关 **********
@@ -67,6 +76,7 @@ public class NewsListActivity extends AppCompatActivity
         initToolbar();
         initList();
         initBanner();
+        initDrawer();
 
         new Handler().post(new Runnable() {
             @Override
@@ -104,7 +114,7 @@ public class NewsListActivity extends AppCompatActivity
     }
 
     private void initBanner(){
-        mHeader = View.inflate(this,R.layout.header,null);
+        mHeader = View.inflate(this,R.layout.layout_header,null);
         mNewsAdapter.setHeaderView(mHeader);
 
         mViewPager = (ViewPager) mHeader.findViewById(R.id.banner_viewpager);
@@ -120,6 +130,18 @@ public class NewsListActivity extends AppCompatActivity
 //        setBannerIndex();
 
 //        mViewPager.setCurrentItem(0);
+    }
+
+    private void initDrawer(){
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar,
+                R.string.drawer_open, R.string.drawer_close);
+        mDrawerToggle.syncState();
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+        mPresenter.getThemes();
+        Log.d("menu","init menu");
     }
 
     private void setBannerIndex(){
@@ -223,6 +245,16 @@ public class NewsListActivity extends AppCompatActivity
     @Override
     public void addNewsListData(List<News> listToAdd) {
         mNewsAdapter.addData(listToAdd);
+    }
+
+    @Override
+    public void setDrawerData(List<ThemeItem> themeItemList) {
+        Menu menu = mNavigationView.getMenu();
+        for(ThemeItem item:themeItemList){
+            mNavigationView.getMenu().add(item.getName());
+            Log.d("menu","add "+item.getName());
+        }
+        mNavigationView.getMenu().notify();
     }
 
     class NewsListLoadingListener extends RecyclerView.OnScrollListener{

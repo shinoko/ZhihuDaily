@@ -8,6 +8,8 @@
     <color name="black">#000000</color>
     <color name="light_gray">#DDDDDD</color>
 
+    <color name="black_alpha">#aa000000</color>
+
     <color name="title_blue">#6699FF</color>
 
     <color name="cyan">#00BCD4</color>

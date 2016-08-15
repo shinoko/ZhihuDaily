@@ -84,6 +84,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
                 holder.newsImage.setImageURI(Uri.parse(news.getImages().get(0)));
             }
 
+            if(news.isMultipic()){
+                holder.multipicInfo.setVisibility(View.VISIBLE);
+            }
+
             holder.cardView.setOnClickListener(getListener(news));
         }
     }
@@ -135,6 +139,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         public CardView cardView;
         public TextView newsTitle;
         public ImageView newsImage;
+        public TextView multipicInfo;
 
         public String dateInfo;
 
@@ -149,6 +154,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             cardView = (CardView) rootView.findViewById(R.id.cv_item);
             newsTitle = (TextView) rootView.findViewById(R.id.tv_title);
             newsImage = (ImageView) rootView.findViewById(R.id.iv_news);
+            multipicInfo = (TextView) rootView.findViewById(R.id.multipic_info);
         }
 
     }

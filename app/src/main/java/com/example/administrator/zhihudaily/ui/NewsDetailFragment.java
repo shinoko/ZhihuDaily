@@ -1,10 +1,13 @@
 package com.example.administrator.zhihudaily.ui;
 
 
+import android.annotation.TargetApi;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,12 +29,14 @@ public class NewsDetailFragment extends Fragment implements INewsDetailView{
 
     private NewsDetailActivity mActivity;
 
+    private AppBarLayout mAppBarLayout;
+
     private RelativeLayout mTitleSection;
     private TextView mTitle;
     private TextView mImageSource;
     private SimpleDraweeView mTitleImage;
 
-    private DetailScrollView mScrollView;
+    private NestedScrollView mScrollView;
     private WebView mWebView;
 
     private INewsDetailPresenter mPresenter;
@@ -45,11 +50,32 @@ public class NewsDetailFragment extends Fragment implements INewsDetailView{
     }
 
 
+    @TargetApi(Build.VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_news_detail, container, false);
+
+        mAppBarLayout = (AppBarLayout) rootView.findViewById(R.id.app_bar);
+//        mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+//            @Override
+//            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+//                Log.d("appbar ","offset:"+verticalOffset);
+//                int maxScroll = appBarLayout.getTotalScrollRange();
+//                Log.d("appbar ","max offset:"+maxScroll);
+//
+//                float percentage = (float) (maxScroll-Math.abs(verticalOffset)) / (float) maxScroll;
+//                int percentagei = (int) (percentage * 255);
+//                Log.d("appbar ","percentage:"+percentage);
+//                Log.d("appbar ","percentagei:"+percentagei);
+//                mActivity.getToolbar().setAlpha(percentage);
+//                mActivity.getToolbar().getBackground().setAlpha(percentagei);
+//
+//            }
+//        });
+
+
 
         mTitleSection = (RelativeLayout) rootView.findViewById(R.id.news_title_section);
         mTitle = (TextView) rootView.findViewById(R.id.news_title);
@@ -57,10 +83,7 @@ public class NewsDetailFragment extends Fragment implements INewsDetailView{
         mTitleImage = (SimpleDraweeView) rootView.findViewById(R.id.news_image);
 
         mWebView = (WebView) rootView.findViewById(R.id.webview_news);
-        mScrollView = (DetailScrollView) rootView.findViewById(R.id.scrollView);
-        mScrollView.setToolbar(mActivity.getToolbar());
-        mScrollView.setHeadView(mTitleSection);
-        mScrollView.setAppBarLayout((AppBarLayout) rootView.findViewById(R.id.app_bar));
+        mScrollView = (NestedScrollView) rootView.findViewById(R.id.scrollView);
 
         mPresenter.initView();
 
@@ -96,4 +119,5 @@ public class NewsDetailFragment extends Fragment implements INewsDetailView{
         mWebView.loadDataWithBaseURL("file:///android_asset/", stringBuffer.toString(), "text/html", "utf-8", null);
 
     }
+
 }

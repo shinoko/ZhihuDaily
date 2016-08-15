@@ -2,6 +2,7 @@ package com.example.administrator.zhihudaily.network;
 
 import com.example.administrator.zhihudaily.model.NewsDetail;
 import com.example.administrator.zhihudaily.model.NewsList;
+import com.example.administrator.zhihudaily.model.ThemeList;
 import com.example.administrator.zhihudaily.util.ContextUtil;
 
 import java.io.File;
@@ -81,6 +82,10 @@ public class NetworkManager {
 
     public Observable<NewsDetail> getNewsDetail(int id) {
         return mService.getNewsDetail(id);
+    }
+
+    public Observable<ThemeList> getThemes(){
+        return mService.getThemes();
     }
 
 

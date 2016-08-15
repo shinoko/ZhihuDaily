@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.example.administrator.zhihudaily.R;
@@ -46,6 +47,17 @@ public class NewsDetailActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+    }
+
+    @Override
+    protected void onStop() {
+        mToolbar.setAlpha(1.0f);
+        mToolbar.getBackground().setAlpha(255);
+        mToolbar.invalidate();
+
+        Log.d("NewsDetailActivity"," on stop");
+
+        super.onStop();
     }
 
     public static void start(Context context, News news) {
