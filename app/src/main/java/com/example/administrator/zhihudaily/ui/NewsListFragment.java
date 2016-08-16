@@ -29,8 +29,6 @@ import java.util.List;
 
 public class NewsListFragment extends Fragment
         implements SwipeRefreshLayout.OnRefreshListener, INewsListView{
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
     private NewsListActivity mActivity;
 
@@ -109,7 +107,7 @@ public class NewsListFragment extends Fragment
     private void initList(){
         mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.cyan);
 
         mNewsListView = (RecyclerView) rootView.findViewById(R.id.news_list_view);
         mNewsListView.setHasFixedSize(true);
@@ -127,7 +125,7 @@ public class NewsListFragment extends Fragment
     }
 
     private void initBanner(){
-        mHeader = View.inflate(this.getContext(),R.layout.layout_header,null);
+        mHeader = View.inflate(this.getContext(),R.layout.layout_home_header,null);
         mNewsAdapter.setHeaderView(mHeader);
 
         mViewPager = (ViewPager) mHeader.findViewById(R.id.banner_viewpager);

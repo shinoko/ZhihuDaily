@@ -123,7 +123,7 @@ public class NewsListActivity extends AppCompatActivity implements INewsListView
     }
 
     private void initBanner(){
-        mHeader = View.inflate(this,R.layout.layout_header,null);
+        mHeader = View.inflate(this,R.layout.layout_home_header,null);
         mNewsAdapter.setHeaderView(mHeader);
 
         mViewPager = (ViewPager) mHeader.findViewById(R.id.banner_viewpager);
